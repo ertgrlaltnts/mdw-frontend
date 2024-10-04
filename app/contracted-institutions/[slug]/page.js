@@ -9,11 +9,14 @@ export const metadata = {
   description: `Discover the most prestigious hospitals and clinics in Turkey that Mediwali partners with. We offer the best treatment experience with trusted healthcare institutions. Entrust your health to expert hands.`,
 };
 
-const HospitalSlider = dynamic(() =>
-  import("@/components/slider/ClientSlider")
+const HospitalSlider = dynamic(
+  () => import("@/components/slider/ClientSlider"),
+  {
+    ssr: false,
+  }
 );
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/hospitals?populate=deep`

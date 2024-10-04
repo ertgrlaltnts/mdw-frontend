@@ -8,7 +8,7 @@ export const metadata = {
   description: `Meet expert doctors with Mediwali. Get professional healthcare services in aesthetic, dental, oncology, orthopedics and many other branches from the most competent physicians in Turkey. Your health is in safe hands.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/doctors?populate=deep`

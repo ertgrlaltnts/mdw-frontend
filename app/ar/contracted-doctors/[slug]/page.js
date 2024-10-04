@@ -8,7 +8,7 @@ export const metadata = {
   description: `تعرف على الأطباء الخبراء مع Mediwali. احصل على خدمات رعاية صحية احترافية من أمهر الأطباء في تركيا في مجالات التجميل وطب الأسنان والأورام وجراحة العظام والعديد من الفروع الأخرى. صحتك في أيدي أمينة.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/doctors?populate=deep`

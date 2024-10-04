@@ -8,7 +8,7 @@ export const metadata = {
   description: `შეხვდით ექსპერტ ექიმებს მედივალთან ერთად. მიიღეთ პროფესიონალური ჯანდაცვის სერვისები თურქეთის ყველაზე კომპეტენტური ექიმებისგან ესთეტიკის, სტომატოლოგიის, ონკოლოგიის, ორთოპედიის და მრავალი სხვა ფილიალში. თქვენი ჯანმრთელობა უსაფრთხო ხელშია.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/doctors?populate=deep`

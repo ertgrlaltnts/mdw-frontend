@@ -2,14 +2,20 @@ import Layout from "@/components/layout/tr/Layout";
 import Link from "next/link";
 import Markdown from "markdown-to-jsx";
 import axios from "axios";
-import HospitalSlider from "@/components/slider/ClientSlider";
+
+const HospitalSlider = dynamic(
+  () => import("@/components/slider/ClientSlider"),
+  {
+    ssr: false,
+  }
+);
 
 export const metadata = {
   title: "Mediwali Sağlık Turizmi | Anlaşmalı Kurumlar",
   description: `Mediwali'nin iş ortaklığı yaptığı Türkiye'nin en prestijli hastane ve kliniklerini keşfedin. Güvenilir sağlık kuruluşları ile en iyi tedavi deneyimini sunuyoruz. Sağlığınızı uzman ellere emanet edin.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/hospitals?populate=deep`

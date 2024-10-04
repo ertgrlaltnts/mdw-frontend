@@ -8,7 +8,7 @@ export const metadata = {
   description: `Mediwali ile uzman doktorlarla tanışın. Estetik, diş, onkoloji, ortopedi ve daha birçok branşta Türkiye'nin en yetkin hekimlerinden profesyonel sağlık hizmeti alın. Sağlığınız emin ellerde.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/doctors?populate=deep`

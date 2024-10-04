@@ -3,7 +3,7 @@ import Link from "next/link";
 import Markdown from "markdown-to-jsx";
 import axios from "axios";
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/blogs?populate=deep`

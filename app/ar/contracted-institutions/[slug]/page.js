@@ -2,14 +2,20 @@ import Layout from "@/components/layout/ar/Layout";
 import Link from "next/link";
 import Markdown from "markdown-to-jsx";
 import axios from "axios";
-import HospitalSlider from "@/components/slider/ClientSlider";
+
+const HospitalSlider = dynamic(
+  () => import("@/components/slider/ClientSlider"),
+  {
+    ssr: false,
+  }
+);
 
 export const metadata = {
   title: "Mediwali Health Tourism | المؤسسات المتعاقدة",
   description: `اكتشف المستشفيات والعيادات المرموقة في تركيا والتي تعد ميديوالي شريكًا تجاريًا لها. نحن نقدم أفضل تجربة علاجية مع مؤسسات الرعاية الصحية الموثوقة. تعهد بصحتك لأيادي الخبراء.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/hospitals?populate=deep`

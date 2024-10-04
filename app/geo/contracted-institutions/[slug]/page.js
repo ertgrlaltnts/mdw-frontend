@@ -2,14 +2,20 @@ import Layout from "@/components/layout/geo/Layout";
 import Link from "next/link";
 import Markdown from "markdown-to-jsx";
 import axios from "axios";
-import HospitalSlider from "@/components/slider/ClientSlider";
+
+const HospitalSlider = dynamic(
+  () => import("@/components/slider/ClientSlider"),
+  {
+    ssr: false,
+  }
+);
 
 export const metadata = {
   title: "Mediwali Health Tourism | კონტრაქტი დაწესებულებები",
   description: `აღმოაჩინეთ თურქეთის ყველაზე პრესტიჟული საავადმყოფოები და კლინიკები, რომლებთანაც Mediwali არის ბიზნეს პარტნიორი. ჩვენ გთავაზობთ საუკეთესო მკურნალობის გამოცდილებას სანდო სამედიცინო დაწესებულებებთან. ანდეთ თქვენი ჯანმრთელობა ექსპერტულ ხელებს.`,
 };
 
-export async function getStaticParams() {
+export async function generateStaticParams() {
   // Örneğin, API'den tüm blog gönderilerinin ID'lerini alın
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/hospitals?populate=deep`
@@ -21,13 +27,14 @@ export async function getStaticParams() {
   }));
 }
 
-
 async function getHospitalData(slug) {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_IP}/api/hospitals?populate=deep`
   );
 
-  const temp = res.data.data.filter((item) => item.attributes.geo.slug === slug);
+  const temp = res.data.data.filter(
+    (item) => item.attributes.geo.slug === slug
+  );
 
   return temp;
 }
@@ -44,7 +51,6 @@ export default async function Home({ params }) {
 
   const hospital = await getHospitalData(slug);
   const general = await getGeneralData();
-
 
   if (!hospital[0]) {
     return (
@@ -85,7 +91,7 @@ export default async function Home({ params }) {
     return (
       <>
         <Layout
-        data={general}
+          data={general}
           headerStyle={1}
           footerStyle={1}
           breadcrumbTitle={hospital[0].attributes.geo.name}
@@ -96,7 +102,9 @@ export default async function Home({ params }) {
               <div className="portfolio-details__inner">
                 <div className="portfolio-details__img-box">
                   <div className="portfolio-details__img">
-                  <HospitalSlider data={hospital[0].attributes.geo.image.data} />
+                    <HospitalSlider
+                      data={hospital[0].attributes.geo.image.data}
+                    />
                   </div>
                   <div className="portfolio-details__catagory">
                     <ul className="portfolio-details__catagory-list list-unstyled">
@@ -169,7 +177,6 @@ export default async function Home({ params }) {
                   </div>
                 ))}
 
-
                 <h3
                   style={{ fontSize: 22, marginBottom: 0 }}
                   className="portfolio-details__title-1"
@@ -185,11 +192,13 @@ export default async function Home({ params }) {
                     className="container"
                   >
                     <div className="row">
-                      {hospital[0].attributes.geo.services.map((item, index) => (
-                        <div key={index} className="col-xl-4 col-lg-4">
-                          <div className="hospital_service_item">{item}</div>
-                        </div>
-                      ))}
+                      {hospital[0].attributes.geo.services.map(
+                        (item, index) => (
+                          <div key={index} className="col-xl-4 col-lg-4">
+                            <div className="hospital_service_item">{item}</div>
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
                 </div>
@@ -211,17 +220,20 @@ export default async function Home({ params }) {
                       "url(../../assets/images/shapes/cta-three-bg-shape-2.png)",
                   }}
                 ></div>
-              <div className="cta-one__title-box">
-                <h3>
-                მიიღეთ <span>შემოთავაზება</span> ახლავე
-                </h3>
-                <p>დაგვიკავშირდით, რომ მიიღოთ ინფორმაცია თქვენთვის სპეციალური შეთავაზებების შესახებ.</p>
-              </div>
-              <div className="cta-one__btn-box">
-                <Link href="/geo/contact" className="cta-one__btn thm-btn">
-                მიიღეთ უფასო შეთავაზება ახლავე
-                </Link>
-              </div>
+                <div className="cta-one__title-box">
+                  <h3>
+                    მიიღეთ <span>შემოთავაზება</span> ახლავე
+                  </h3>
+                  <p>
+                    დაგვიკავშირდით, რომ მიიღოთ ინფორმაცია თქვენთვის სპეციალური
+                    შეთავაზებების შესახებ.
+                  </p>
+                </div>
+                <div className="cta-one__btn-box">
+                  <Link href="/geo/contact" className="cta-one__btn thm-btn">
+                    მიიღეთ უფასო შეთავაზება ახლავე
+                  </Link>
+                </div>
               </div>
             </div>
           </section>
