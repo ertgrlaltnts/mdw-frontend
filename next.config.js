@@ -1,0 +1,12 @@
+/** @type {import('next').NextConfig} */
+
+module.exports = {
+  reactStrictMode: true,
+    webpack: (config) => {
+      config.resolve = {
+        ...config.resolve,
+        preferRelative: true
+      };
+      return config;
+    }
+  };
